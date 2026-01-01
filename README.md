@@ -46,4 +46,20 @@ CPU affinity pinning to isolated cores
 
 NUMA awareness for multi-socket systems
 
+# Build library and binary
+cargo build --release
+
+# Run the binary
+./target/release/hft-market-data-engine
+
+# Run with logging
+RUST_LOG=debug cargo run --release
+
+# Run tests
+cargo test --release
+
+# Run benchmarks
+cargo bench
+
+
 Real-time kernel recommended for sub-microsecond consistency
