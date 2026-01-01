@@ -1,8 +1,8 @@
 use std::fmt;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Symbol {
-    pub value: [u8; 8], // Ticker symbol (e.g., "AAPL")
+    pub value: [u8; 8],
 }
 
 impl Symbol {
@@ -13,17 +13,28 @@ impl Symbol {
         }
         Symbol { value }
     }
+
+    pub fn as_str(&self) -> &str {
+        let len = self.value.iter().position(|&b| b == b' ').unwrap_or(8);
+        std::str::from_utf8(&self.value[..len]).unwrap_or("INVALID")
+    }
+}
+
+impl fmt::Display for Symbol {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct Price(i32); // Fixed point: price * 10000
+pub struct Price(i32);
 
 impl Price {
     pub fn new(p: f64) -> Self {
         Price((p * 10000.0) as i32)
     }
 
-    pub fn to_f64(&self) -> f64 {
+    pub fn to_double(&self) -> f64 {
         self.0 as f64 / 10000.0
     }
 }
