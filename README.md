@@ -30,6 +30,18 @@ Chaos Engineering: Feed disconnects, corrupted messages, clock skew
 Deployment Considerations
 Linux kernel tuning: mlockall(), RT scheduling priority
 
+# Build with optimizations
+cargo build --release
+
+# Run with latency tracking
+RUST_LOG=info cargo run --release -- --feed exchange.cboe
+
+# Benchmark throughput
+cargo bench --bench throughput
+
+# Run latency profiler
+cargo run --release --example latency_profiler
+
 CPU affinity pinning to isolated cores
 
 NUMA awareness for multi-socket systems
